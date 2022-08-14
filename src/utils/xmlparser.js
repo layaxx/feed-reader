@@ -3,7 +3,7 @@
 import { hasProperty, isString } from 'bellajs'
 
 import { XMLValidator, XMLParser } from 'fast-xml-parser'
-import { getParserOptions } from '../config'
+import { getParserOptions } from '../config.js'
 
 export const isRSS = (data = {}) => {
   return hasProperty(data, 'rss') && hasProperty(data.rss, 'channel')
