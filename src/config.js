@@ -19,6 +19,12 @@ const readerOptions = {
   convertPubDateToISO: true
 }
 
+const parserOptions = {
+  ignoreAttributes: false,
+  stopNodes: ['feed.entry.content'],
+  removeNSPrefix: true
+}
+
 export const getRequestOptions = () => {
   return clone(requestOptions)
 }
@@ -33,4 +39,12 @@ export const getReaderOptions = () => {
 
 export const setReaderOptions = (opts) => {
   copies(opts, readerOptions)
+}
+
+export const getParserOptions = () => {
+  return clone(parserOptions)
+}
+
+export const setParserOptions = (opts) => {
+  copies(opts, parserOptions)
 }

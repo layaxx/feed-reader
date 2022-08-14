@@ -7,7 +7,9 @@ import {
   setRequestOptions,
   getRequestOptions,
   setReaderOptions,
-  getReaderOptions
+  getReaderOptions,
+  setParserOptions,
+  getParserOptions
 } from './config.js'
 
 const defaultRequestOptions = getRequestOptions()
@@ -45,5 +47,21 @@ describe('check methods from `config`', () => {
 
     expect(descriptionMaxLen).toEqual(250)
     expect(includeFullContent).toEqual(true)
+  })
+  test('Testing setParserOptions/getParserOptions methods', () => {
+    setParserOptions({
+      ignoreAttributes: true,
+      stopNodes: ['feed.entry', 'other.path.to.tag'],
+      removeNSPrefix: false,
+      newAttribute: 'someValue'
+    })
+
+    const { ignoreAttributes, stopNodes, removeNSPrefix, newAttribute } = getParserOptions()
+
+    expect(ignoreAttributes).toEqual(true)
+    expect(stopNodes).toContain('feed.entry')
+    expect(stopNodes).toContain('other.path.to.tag')
+    expect(removeNSPrefix).toEqual(false)
+    expect(newAttribute).toEqual('someValue')
   })
 })

@@ -17,7 +17,7 @@
   "scripts": {
     "lint": "standard .",
     "pretest": "npm run lint",
-    "test": "NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --coverage=true",
+    "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --coverage=true",
     "build": "node build",
     "eval": "node eval",
     "eval:cjs": "node eval.cjs",
@@ -30,9 +30,11 @@
     "html-entities": "^2.3.3"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "esbuild": "^0.15.2",
     "jest": "^28.1.3",
-    "nock": "^13.2.9"
+    "nock": "^13.2.9",
+    "standard": "^17.0.0"
   },
   "standard": {
     "ignore": [

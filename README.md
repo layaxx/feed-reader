@@ -109,6 +109,15 @@ To change default reader options.
 
 Return current reader options.
 
+#### `setParserOptions(Object parserOptions)`
+
+To change default parser options.
+
+- `ignoreAttributes`: boolean, see [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) (default `false`)
+- `stopNodes`: array of strings, see [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) (default `false`) (default `['feed.entry.content']`)
+- `removeNSPrefix`: boolean, see [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) (default `true`)
+- any other options from [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser)
+
 
 ## Test
 

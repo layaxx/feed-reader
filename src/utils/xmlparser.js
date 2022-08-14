@@ -3,6 +3,7 @@
 import { hasProperty, isString } from 'bellajs'
 
 import { XMLValidator, XMLParser } from 'fast-xml-parser'
+import { getParserOptions } from '../config'
 
 export const isRSS = (data = {}) => {
   return hasProperty(data, 'rss') && hasProperty(data.rss, 'channel')
@@ -17,10 +18,7 @@ export const validate = (xml) => {
 }
 
 export const xml2obj = (xml = '') => {
-  const options = {
-    ignoreAttributes: false
-  }
-  const parser = new XMLParser(options)
+  const parser = new XMLParser(getParserOptions())
   const jsonObj = parser.parse(xml)
   return jsonObj
 }

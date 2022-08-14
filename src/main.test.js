@@ -142,6 +142,24 @@ describe('test read() standard feed full content', () => {
     newEntryAttrs.forEach((k) => {
       expect(hasProperty(result.entries[0], k)).toBe(true)
     })
+    expect(result.entries[0].content).toBeTruthy()
+  })
+
+  test('read atom feed', async () => {
+    const url = 'https://some-news-page.tld/atom'
+    const xml = readFileSync('test-data/atom-feed-standard.xml', 'utf8')
+    const { baseUrl, path } = parseUrl(url)
+    nock(baseUrl).get(path).reply(200, xml, {
+      'Content-Type': 'application/xml'
+    })
+    const result = await read(url)
+    feedAttrs.forEach((k) => {
+      expect(hasProperty(result, k)).toBe(true)
+    })
+    newEntryAttrs.forEach((k) => {
+      expect(hasProperty(result.entries[0], k)).toBe(true)
+    })
+    expect(result.entries[0].content).toBeTruthy()
   })
 
   test('read atom feed from Google', async () => {
@@ -158,6 +176,7 @@ describe('test read() standard feed full content', () => {
     newEntryAttrs.forEach((k) => {
       expect(hasProperty(result.entries[0], k)).toBe(true)
     })
+    expect(result.entries[0].content).toBeTruthy()
   })
 
   test('read json feed from Micro.blog', async () => {
@@ -174,5 +193,6 @@ describe('test read() standard feed full content', () => {
     newEntryAttrs.forEach((k) => {
       expect(hasProperty(result.entries[0], k)).toBe(true)
     })
+    expect(result.entries[0].content).toBeTruthy()
   })
 })
