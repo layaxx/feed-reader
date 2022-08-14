@@ -15,7 +15,9 @@ export {
   getRequestOptions,
   setRequestOptions,
   getReaderOptions,
-  setReaderOptions
+  setReaderOptions,
+  getParserOptions,
+  setParserOptions
 } from './config.js'
 
 export const read = async (url) => {
