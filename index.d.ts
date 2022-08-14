@@ -29,6 +29,7 @@ export type FeedEntry = {
     link: string | null
     published: any
     description: any
+    content?: string
 }
 
 export type ReaderOptions = {
