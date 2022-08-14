@@ -37,6 +37,10 @@ export const read = async (url) => {
     throw new Error('The XML document is not well-formed')
   }
 
+  return parseString(text)
+}
+
+export const parseString = (text) => {
   const xml = xml2obj(text)
   return isRSS(xml)
     ? parseRssFeed(xml)

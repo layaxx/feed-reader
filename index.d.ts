@@ -3,6 +3,7 @@ import { AxiosRequestConfig } from "axios"
 import { X2jOptions } from "fast-xml-parser";
 
 export function read(url: string): Promise<FeedData | null>;
+export function parseString(text: string): FeedData | null
 
 export function getRequestOptions(): AxiosRequestConfig<any>;
 export function setRequestOptions(opts: AxiosRequestConfig<any>): void;
