@@ -35,7 +35,7 @@ read(url).then((feed) => {
 - [.read(String url)](#readstring-url)
 - [Configuration methods](#configuration-methods)
 
-### read(String url)
+### `read(String url)`
 
 Load and extract feed data from given RSS/ATOM/JSON source. Return a Promise object.
 
@@ -63,7 +63,7 @@ getFeedData('https://news.google.com/atom')
 getFeedData('https://adactio.com/journal/feed.json')
 ```
 
-Feed data object retuned by `read()` method should look like below:
+Feed data object returned by `read()` method should look like below:
 
 ```json
 {
@@ -85,11 +85,78 @@ Feed data object retuned by `read()` method should look like below:
 }
 ```
 
+### `parseString(String string)`
+
+Extract feed data from given XML string, which may have been locally generated or previously fetched. Synchronously returns the parsed Feed. This method is internally used by the `read` method.
+
+Example:
+
+```js
+import {
+  parseString
+} from 'feed-reader'
+
+const xml = `<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:webfeeds="http://webfeeds.org/rss/1.0">
+  <id>https://web3isgoinggreat.com/feed.xml</id>
+  <title type="html">Web3 is going just great</title>
+  <author>
+    <name>Molly White</name>
+    <email>molly.white5@gmail.com</email>
+    <uri>https://www.mollywhite.net</uri>
+  </author>
+  <link rel="self" href="https://web3isgoinggreat.com/feed.xml" />
+  <link rel="alternate" href="https://web3isgoinggreat.com" />
+  <rights type="html">CC-BY-SA 3.0</rights>
+  <updated>2022-08-14T15:06:36.316Z</updated>
+  <entry>
+    <title type="html">Brazilian crypto lender BlueBenx halts customer withdrawals and lays off employees after $32 million &#34;hack&#34;</title>
+    <published>2022-08-14T14:59:53.897Z</published>
+    <updated>2022-08-14T15:03:00.230Z</updated>
+    <link href="https://web3isgoinggreat.com/single/brazilian-crypto-lender-bluebenx-halts-customer-withdrawals-and-lays-off-employees-after-32-million-hack"/> 
+    <id>https://web3isgoinggreat.com/single/brazilian-crypto-lender-bluebenx-halts-customer-withdrawals-and-lays-off-employees-after-32-million-hack</id>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <img
+          src="https://storage.googleapis.com/primary-web3/entryImages/logos/resized/bluebenx_300.webp" ...
+        />
+        <p>The Brazilian crypto lending platform BlueBenx suddenly shut its doors after announcing they had suffered an "extremely aggressive" hack of 160 million BRL (US$32 million). [...] 
+        </p>
+      </div>
+    </content>
+  </entry>  
+</feed>`
+const parsedFeed = parseString(xml)
+
+console.log(parsedFeed)
+```
+
+Feed data object returned by `parseString()` method should (also) look like this:
+
+```json
+{
+  "title": "Web3 is going just great",
+  "link": "https://web3isgoinggreat.com/feed.xml",
+  "description": "",
+  "language": "",
+  "generator": "",
+  "published": "2022-08-14T15:06:36.316Z",
+  "entries": [
+    {
+      "title": "Brazilian crypto lender BlueBenx halts customer withdrawals and lays off employees after $32 million \"hack\"",
+      "link": "https://web3isgoinggreat.com/single/brazilian-crypto-lender-bluebenx-halts-customer-withdrawals-and-lays-off-employees-after-32-million-hack",
+      "published": "2022-08-14T15:03:00.230Z",
+      "description": "<img src=\"https://storage.googleapis.com/primary-web3/entryImages/logos/resized/bluebenx_300.webp\" alt=\"Text \"BlueBenx\" in bright blue, followed by a blue diagonal line with a blue line spiraling around it\"..."
+    }
+  ]
+}
+```
+
 ### Configuration methods
 
 #### `setRequestOptions(Object requestOptions)`
 
-Affect to the way how `axios` works. Please refer [axios' request config](https://axios-http.com/docs/req_config) for more info.
+Affects the way `axios` works. Please refer [axios' request config](https://axios-http.com/docs/req_config) for more info.
 
 #### `getRequestOptions()`
 
@@ -99,25 +166,32 @@ Default values can be found [here](https://github.com/ndaidong/feed-reader/blob/
 
 #### `setReaderOptions(Object readerOptions)`
 
-To change default reader options.
-
-- `descriptionMaxLen`: Number, max num of chars for description (default: `210`)
-- `includeFullContent`: Boolean, add `content` to entry if available (default: `false`)
-- `convertPubDateToISO`: Boolean, reformat published date to [ISO standard](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString) (default: `true`)
+Change reader options.
 
 #### `getReaderOptions()`
 
 Return current reader options.
 
+Default values:
+
+- `descriptionMaxLen`: Number, max num of chars for description (default: `210`)
+- `includeFullContent`: Boolean, add `content` to entry if available (default: `false`)
+- `convertPubDateToISO`: Boolean, reformat published date to [ISO standard](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString) (default: `true`)
+
 #### `setParserOptions(Object parserOptions)`
 
-To change default parser options.
+Change parser options.
+
+#### `getParserOptions()`
+
+Return current parser options.
+
+Default values:
 
 - `ignoreAttributes`: boolean, see [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) (default `false`)
 - `stopNodes`: array of strings, see [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) (default `false`) (default `['feed.entry.content']`)
 - `removeNSPrefix`: boolean, see [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) (default `true`)
 - any other options from [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser)
-
 
 ## Test
 
@@ -132,6 +206,7 @@ npm test
 ```
 
 ## License
+
 The MIT License (MIT)
 
 ---

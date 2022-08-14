@@ -33,14 +33,14 @@ export const read = async (url) => {
     return parseJsonFeed(json)
   }
 
-  if (!validate(text)) {
-    throw new Error('The XML document is not well-formed')
-  }
-
   return parseString(text)
 }
 
 export const parseString = (text) => {
+  if (!validate(text)) {
+    throw new Error('The XML document is not well-formed')
+  }
+
   const xml = xml2obj(text)
   return isRSS(xml)
     ? parseRssFeed(xml)
