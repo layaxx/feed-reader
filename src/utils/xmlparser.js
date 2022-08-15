@@ -1,20 +1,23 @@
 // utils / xmlparser
 
-import { hasProperty, isString } from 'bellajs'
+import { isString } from 'bellajs'
 
 import { XMLValidator, XMLParser } from 'fast-xml-parser'
 import { getParserOptions } from '../config.js'
+import { hasElementHelper, getFirstMatch } from './xmlutils.js'
 
 export const isRSS = (data = {}) => {
-  return hasProperty(data, 'rss') && hasProperty(data.rss, 'channel')
+  return hasElementHelper(data, 'rss') &&
+    hasElementHelper(getFirstMatch(data, 'rss'), 'channel')
 }
 
 export const isAtom = (data = {}) => {
-  return hasProperty(data, 'feed') && hasProperty(data.feed, 'entry')
+  return hasElementHelper(data, 'feed') &&
+    hasElementHelper(getFirstMatch(data, 'feed'), 'entry')
 }
 
 export const validate = (xml) => {
-  return (!isString(xml) || !xml.length) ? false : XMLValidator.validate(xml) === true
+  return isString(xml) && Boolean(xml.length) && XMLValidator.validate(xml) === true
 }
 
 export const xml2obj = (xml = '') => {

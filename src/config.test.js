@@ -48,6 +48,7 @@ describe('check methods from `config`', () => {
     expect(descriptionMaxLen).toEqual(250)
     expect(includeFullContent).toEqual(true)
   })
+
   test('Testing setParserOptions/getParserOptions methods', () => {
     setParserOptions({
       ignoreAttributes: true,

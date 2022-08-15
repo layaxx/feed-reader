@@ -21,7 +21,7 @@ const readerOptions = {
 
 const parserOptions = {
   ignoreAttributes: false,
-  stopNodes: ['feed.entry.content'],
+  preserveOrder: true,
   removeNSPrefix: true
 }
 

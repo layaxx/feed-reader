@@ -2,12 +2,10 @@
 /* eslint-env jest */
 
 import { readFileSync } from 'fs'
-
 import nock from 'nock'
-
 import { hasProperty } from 'bellajs'
 
-import { read, getReaderOptions, setReaderOptions } from './main.js'
+import { read, getReaderOptions, setReaderOptions, parseString } from './main.js'
 
 const feedAttrs = 'title link description generator language published entries'.split(' ')
 const entryAttrs = 'title link description published'.split(' ')
@@ -22,8 +20,8 @@ const parseUrl = (url) => {
   }
 }
 
-afterAll(() => {
-  return setReaderOptions(defaultReaderOptions)
+afterEach(() => {
+  setReaderOptions(defaultReaderOptions)
 })
 
 describe('test read() function with common issues', () => {
@@ -125,7 +123,7 @@ describe('test read() standard feed', (done) => {
 })
 
 describe('test read() standard feed full content', () => {
-  setReaderOptions({ includeFullContent: true })
+  beforeEach(() => setReaderOptions({ includeFullContent: true }))
   const newEntryAttrs = [...entryAttrs, 'content']
 
   test('read rss feed from Google', async () => {
@@ -194,5 +192,215 @@ describe('test read() standard feed full content', () => {
       expect(hasProperty(result.entries[0], k)).toBe(true)
     })
     expect(result.entries[0].content).toBeTruthy()
+  })
+})
+
+describe('additional real world tests', () => {
+  describe('Atom feed', () => {
+    const url = 'test-data/atom-realworld.xml'
+
+    test('only standard values', () => {
+      const xml = readFileSync(url, 'utf8')
+      const result = parseString(xml)
+
+      const expectedKeys = ['id', 'title', 'link', 'description', 'generator', 'language', 'published', 'entries']
+      expect(Object.keys(result)).toEqual(expect.arrayContaining(expectedKeys))
+      expect(Object.keys(result).length).toBe(expectedKeys.length)
+
+      expect(result.id).toEqual('https://web3isgoinggreat.com/feed.xml')
+      expect(result.title).toEqual('Web3 is going just great')
+      expect(result.link).toEqual('https://web3isgoinggreat.com/feed.xml')
+      expect(result.description).toEqual('')
+      expect(result.generator).toEqual('')
+      expect(result.language).toEqual('')
+      expect(result.published).toEqual('2022-08-14T15:06:36.316Z')
+      expect(result.entries.length).toBe(2)
+
+      result.entries.forEach(entry => {
+        const expectedEntryKeys = ['title', 'link', 'published', 'description']
+        expect(Object.keys(entry)).toEqual(expect.arrayContaining(expectedEntryKeys))
+        expect(Object.keys(entry).length).toBe(expectedEntryKeys.length)
+      })
+
+      expect(result.entries[0].title).toEqual('Brazilian crypto lender BlueBenx halts customer withdrawals and lays off employees after $32 million "hack"')
+      expect(result.entries[0].link).toEqual('https://web3isgoinggreat.com/single/brazilian-crypto-lender-bluebenx-halts-customer-withdrawals-and-lays-off-employees-after-32-million-hack')
+      expect(result.entries[0].published).toEqual('2022-08-14T15:03:00.230Z')
+      expect(result.entries[0].description).toBeTruthy()
+      expect(result.entries[0].description.length).toBe(211)
+
+      expect(result.entries[1].title).toEqual('Misconfiguration in the Acala stablecoin project allows attacker to steal 1.2 billion aUSD')
+      expect(result.entries[1].link).toEqual('https://web3isgoinggreat.com/single/misconfiguration-in-the-acala-stablecoin-project-allows-attacker-to-steal-1-2-billion-ausd')
+      expect(result.entries[1].published).toEqual('2022-08-14T15:06:19.264Z')
+      expect(result.entries[1].description).toBeTruthy()
+      expect(result.entries[1].description.length).toBe(210)
+    })
+
+    test('all values', () => {
+      setReaderOptions({ includeFullContent: true })
+
+      const xml = readFileSync(url, 'utf8')
+      const result = parseString(xml)
+
+      const expectedKeys = [
+        'id', 'title',
+        'link', 'description',
+        'generator', 'language',
+        'published', 'entries',
+        'author', 'icon',
+        'cover', 'accentColor',
+        'category', 'rights'
+      ]
+      expect(Object.keys(result)).toEqual(expect.arrayContaining(expectedKeys))
+      expect(Object.keys(result).length).toBe(expectedKeys.length)
+
+      expect(result).toMatchObject({
+        // TODO: this should probably not be build as XML (only build XML when html or xhtml attribute is set?)
+        author: '<name>Molly White</name><email>molly.white5@gmail.com</email><uri>https://www.mollywhite.net</uri>',
+        icon: 'https://web3isgoinggreat.com/favicon-32x32.png',
+        cover: '<cover image="https://storage.googleapis.com/primary-web3/entryImages/monkey-og.png"></cover>',
+        accentColor: '5948a4',
+        category: '<category term="technology"></category>',
+        rights: 'CC-BY-SA 3.0'
+      })
+
+      result.entries.forEach(entry => {
+        const expectedEntryKeys = ['title', 'link', 'published', 'description', 'content']
+        expect(Object.keys(entry)).toEqual(expect.arrayContaining(expectedEntryKeys))
+        expect(Object.keys(entry).length).toBe(expectedEntryKeys.length)
+      })
+    })
+  })
+
+  describe('RSS feed', () => {
+    const url = 'test-data/rss-realworld.xml'
+
+    test('only standard values', () => {
+      const xml = readFileSync(url, 'utf8')
+      const result = parseString(xml)
+
+      const expectedKeys = ['title', 'link', 'description', 'generator', 'language', 'published', 'entries']
+      expect(Object.keys(result)).toEqual(expect.arrayContaining(expectedKeys))
+      expect(Object.keys(result).length).toBe(expectedKeys.length)
+
+      expect(result.title).toEqual('Fefes Blog')
+      expect(result.link).toEqual('https://blog.fefe.de/')
+      expect(result.description).toEqual('Verschwörungen und Obskures aus aller Welt')
+      expect(result.generator).toEqual('')
+      expect(result.language).toEqual('de')
+      expect(result.published).toEqual('')
+      expect(result.entries.length).toBe(1)
+
+      result.entries.forEach(entry => {
+        const expectedEntryKeys = ['title', 'link', 'published', 'description', 'guid']
+        expect(Object.keys(entry)).toEqual(expect.arrayContaining(expectedEntryKeys))
+        expect(Object.keys(entry).length).toBe(expectedEntryKeys.length)
+      })
+
+      expect(result.entries[0].title).toEqual('Hier ist ausnahmsweise mal eine Packung gute Laune: ...')
+      expect(result.entries[0].link).toEqual('https://blog.fefe.de/?ts=9c08eaef')
+      expect(result.entries[0].published).toEqual('')
+      expect(result.entries[0].description).toBeTruthy()
+      expect(result.entries[0].description.length).toBe(209)
+    })
+
+    test('all values', () => {
+      setReaderOptions({ includeFullContent: true })
+
+      const xml = readFileSync(url, 'utf8')
+      const result = parseString(xml)
+
+      const expectedKeys = ['title', 'link', 'description', 'generator', 'language', 'published', 'entries']
+      expect(Object.keys(result)).toEqual(expect.arrayContaining(expectedKeys))
+      expect(Object.keys(result).length).toBe(expectedKeys.length)
+
+      result.entries.forEach(entry => {
+        const expectedEntryKeys = ['title', 'link', 'published', 'description', 'guid', 'content']
+        expect(Object.keys(entry)).toEqual(expect.arrayContaining(expectedEntryKeys))
+        expect(Object.keys(entry).length).toBe(expectedEntryKeys.length)
+      })
+    })
+  })
+
+  describe('Substack feed', () => {
+    const url = 'test-data/substack.xml'
+
+    test('only standard values', () => {
+      const xml = readFileSync(url, 'utf8')
+      const result = parseString(xml)
+
+      const expectedKeys = ['title', 'link', 'description', 'language', 'generator', 'published', 'entries']
+      expect(Object.keys(result)).toEqual(expect.arrayContaining(expectedKeys))
+      expect(Object.keys(result).length).toBe(expectedKeys.length)
+
+      expect(result.title).toEqual('Astral Codex Ten')
+      expect(result.link).toEqual('https://astralcodexten.substack.com/')
+      expect(result.description).toEqual('P(A|B) = [P(A)*P(B|A)]/P(B), all the rest is commentary.')
+      expect(result.generator).toEqual('Substack')
+      expect(result.language).toEqual('en')
+      expect(result.published).toEqual('2022-08-15T16:06:34.000Z')
+      expect(result.entries.length).toBe(2)
+
+      result.entries.forEach(entry => {
+        const expectedEntryKeys = ['title', 'link', 'published', 'description', 'guid']
+        expect(Object.keys(entry)).toEqual(expect.arrayContaining(expectedEntryKeys))
+        expect(Object.keys(entry).length).toBe(expectedEntryKeys.length)
+      })
+
+      expect(result.entries[0].title).toEqual('Open Thread 237')
+      expect(result.entries[0].link).toEqual('https://astralcodexten.substack.com/p/open-thread-237')
+      expect(result.entries[0].published).toEqual('2022-08-14T22:35:35.000Z')
+      expect(result.entries[0].description).toBeTruthy()
+      expect(result.entries[0].description.length).toBe(210)
+
+      expect(result.entries[1].title).toEqual('Your Book Review: God Emperor Of Dune')
+      expect(result.entries[1].link).toEqual('https://astralcodexten.substack.com/p/your-book-review-god-emperor-of-dune')
+      expect(result.entries[1].published).toEqual('2022-08-13T00:15:22.000Z')
+      expect(result.entries[1].description).toBeTruthy()
+      expect(result.entries[1].description.length).toBe(9)
+    })
+
+    test('all values', () => {
+      setReaderOptions({ includeFullContent: true })
+
+      const xml = readFileSync(url, 'utf8')
+      const result = parseString(xml)
+
+      const expectedKeys = [
+        'title', 'link',
+        'description', 'language',
+        'generator', 'published',
+        'entries', 'image',
+        'copyright', 'webMaster',
+        'owner', 'author',
+        'email'
+      ]
+
+      expect(Object.keys(result)).toEqual(expect.arrayContaining(expectedKeys))
+      expect(Object.keys(result).length).toBe(expectedKeys.length)
+
+      expect(result).toMatchObject({
+        image: '<url>https://substackcdn.com/image/fetch/w_256,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F430241cb-ade5-4316-b1c9-6e3fe6e63e5e_256x256.png</url><title>Astral Codex Ten</title><link>https://astralcodexten.substack.com</link>',
+        copyright: 'Scott Alexander',
+        webMaster: 'astralcodexten@substack.com',
+        owner: '<email>astralcodexten@substack.com</email><name>Scott Alexander</name>astralcodexten@substack.com',
+        author: 'Scott Alexander',
+        email: 'astralcodexten@substack.com'
+      })
+
+      result.entries.forEach(entry => {
+        const expectedEntryKeys = [
+          'title',
+          'link',
+          'published',
+          'description',
+          'guid',
+          'content',
+          'creator',
+          'enclosure'
+        ]
+        expect(Object.keys(entry)).toEqual(expect.arrayContaining(expectedEntryKeys))
+        expect(Object.keys(entry).length).toBe(expectedEntryKeys.length)
+      })
+    })
   })
 })

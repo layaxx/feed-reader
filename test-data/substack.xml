@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0">
+  <channel>
+    <title>
+      <![CDATA[Astral Codex Ten]]>
+    </title>
+    <description>
+      <![CDATA[P(A|B) = [P(A)*P(B|A)]/P(B), all the rest is commentary.]]>
+    </description>
+    <link>https://astralcodexten.substack.com</link>
+    <image>
+      <url>https://substackcdn.com/image/fetch/w_256,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F430241cb-ade5-4316-b1c9-6e3fe6e63e5e_256x256.png</url>
+      <title>Astral Codex Ten</title>
+      <link>https://astralcodexten.substack.com</link>
+    </image>
+    <generator>Substack</generator>
+    <lastBuildDate>Mon, 15 Aug 2022 16:06:34 GMT</lastBuildDate>
+    <atom:link href="https://astralcodexten.substack.com/feed" rel="self" type="application/rss+xml" />
+    <copyright>
+      <![CDATA[Scott Alexander]]>
+    </copyright>
+    <language>
+      <![CDATA[en]]>
+    </language>
+    <webMaster>
+      <![CDATA[astralcodexten@substack.com]]>
+    </webMaster>
+    <itunes:owner>
+      <itunes:email>
+        <![CDATA[astralcodexten@substack.com]]>
+      </itunes:email>
+      <itunes:name>
+        <![CDATA[Scott Alexander]]>
+      </itunes:name>
+    </itunes:owner>
+    <itunes:author>
+      <![CDATA[Scott Alexander]]>
+    </itunes:author>
+    <googleplay:owner>
+      <![CDATA[astralcodexten@substack.com]]>
+    </googleplay:owner>
+    <googleplay:email>
+      <![CDATA[astralcodexten@substack.com]]>
+    </googleplay:email>
+    <googleplay:author>
+      <![CDATA[Scott Alexander]]>
+    </googleplay:author>
+    <item>
+      <title>
+        <![CDATA[Open Thread 237]]>
+      </title>
+      <description>
+        <![CDATA[...]]>
+      </description>
+      <link>https://astralcodexten.substack.com/p/open-thread-237</link>
+      <guid isPermaLink="true">https://astralcodexten.substack.com/p/open-thread-237</guid>
+      <dc:creator>
+        <![CDATA[Scott Alexander]]>
+      </dc:creator>
+      <pubDate>Sun, 14 Aug 2022 22:35:35 GMT</pubDate>
+      <enclosure url="https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/f0a2ad84-cd90-4770-b6f4-90691e603b5a_1022x926.png" length="0" type="image/jpeg" />
+      <content:encoded>
+        <![CDATA[<p>This is the weekly visible open thread. Post about anything you want, ask random questions, whatever. ACX has an unofficial <a href="https://www.reddit.com/r/slatestarcodex/">subreddit</a>, <a href="https://discord.gg/RTKtdut">Discord</a>, and <a href="https://www.datasecretslox.com/index.php">bulletin board</a>, and <a href="https://www.lesswrong.com/community?filters%5B0%5D=SSC">in-person meetups around the world</a>. 95% of content is free, but for the remaining 5% you can subscribe <a href="https://astralcodexten.substack.com/subscribe?">here</a>. In this week&#8217;s news:</p><p><strong>1: </strong><em>Asterisk</em> is an upcoming effective altruist magazine currently headquartered in my spare bedroom. My friend Clara is editor and the first issue will feature articles by me, Kelsey Piper, and other people you might know. Go to <a href="http://asteriskmag.com/">asteriskmag.com</a> to check it out and sign up for the mailing list.</p><p><strong>2: </strong>I&#8217;m still interested in testing some prompts on one of the bigger post-DALLE2 image models (PARTI? Imagen?) in order to resolve a bet. Please get in touch with me (scott@slatestarcodex.com) if you can help.</p><p></p>]]>
+      </content:encoded>
+    </item>
+    <item>
+      <title>
+        <![CDATA[Your Book Review: God Emperor Of Dune]]>
+      </title>
+      <description>
+        <![CDATA[Finalist #14 in the Book Review Contest]]>
+      </description>
+      <link>https://astralcodexten.substack.com/p/your-book-review-god-emperor-of-dune</link>
+      <guid isPermaLink="true">https://astralcodexten.substack.com/p/your-book-review-god-emperor-of-dune</guid>
+      <dc:creator>
+        <![CDATA[Scott Alexander]]>
+      </dc:creator>
+      <pubDate>Sat, 13 Aug 2022 00:15:22 GMT</pubDate>
+      <enclosure url="https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/a621dc83-7e87-4745-8ceb-c6ba1acaf1de_498x344.png" length="0" type="image/jpeg" />
+      <content:encoded>
+        <![CDATA[<p>[removed]</p>]]>
+      </content:encoded>
+    </item>
+  </channel>
+</rss>

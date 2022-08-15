@@ -35,7 +35,7 @@ describe('test methods from `xmlparser`', () => {
   test('test xml2obj(well format xml)', async () => {
     const xmlData = '<xml><atag id="12">value</atag></xml>'
     const result = xml2obj(xmlData)
+
     expect(result).toBeInstanceOf(Object)
-    expect(result.xml).toBeInstanceOf(Object)
   })
 })

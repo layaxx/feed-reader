@@ -175,12 +175,14 @@ Return current reader options.
 Default values:
 
 - `descriptionMaxLen`: Number, max num of chars for description (default: `210`)
-- `includeFullContent`: Boolean, add `content` to entry if available (default: `false`)
+- `includeFullContent`: Boolean, add `content` and to entry if available, also add any other values to feed and feed entries that are not included by default, such as `author`, `ttl`, etc. Note that those may still be in xml format if they are complex types (default: `false`)
 - `convertPubDateToISO`: Boolean, reformat published date to [ISO standard](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString) (default: `true`)
 
 #### `setParserOptions(Object parserOptions)`
 
 Change parser options.
+
+- use any options from [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser)
 
 #### `getParserOptions()`
 
@@ -189,9 +191,10 @@ Return current parser options.
 Default values:
 
 - `ignoreAttributes`: boolean, see [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) (default `false`)
-- `stopNodes`: array of strings, see [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) (default `false`) (default `['feed.entry.content']`)
+- `preserveOrder`: boolean, see [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser)  (default `true`)
+  - changing this may break functionality, use at own risk
 - `removeNSPrefix`: boolean, see [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser) (default `true`)
-- any other options from [fast-xml-parser](https://github.com/NaturalIntelligence/fast-xml-parser)
+
 
 ## Test
 

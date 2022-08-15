@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:webfeeds="http://webfeeds.org/rss/1.0">
+  <id>https://web3isgoinggreat.com/feed.xml</id>
+  <title type="html">Web3 is going just great</title>
+  <author>
+    <name>Molly White</name>
+    <email>molly.white5@gmail.com</email>
+    <uri>https://www.mollywhite.net</uri>
+  </author>
+  <link rel="self" href="https://web3isgoinggreat.com/feed.xml" />
+  <link rel="alternate" href="https://web3isgoinggreat.com" />
+  <icon>https://web3isgoinggreat.com/favicon-32x32.png</icon>
+  <webfeeds:icon>https://web3isgoinggreat.com/favicon-32x32.png</webfeeds:icon>
+  <webfeeds:cover image="https://storage.googleapis.com/primary-web3/entryImages/monkey-og.png"></webfeeds:cover>
+  <webfeeds:accentColor>5948a4</webfeeds:accentColor>
+  <category term="technology" />
+  <rights type="html">CC-BY-SA 3.0</rights>
+  <updated>2022-08-14T15:06:36.316Z</updated>
+
+  <entry>
+    <title type="html">Brazilian crypto lender BlueBenx halts customer withdrawals and lays off employees after $32 million &#34;hack&#34;</title>
+    <published>2022-08-14T14:59:53.897Z</published>
+    <updated>2022-08-14T15:03:00.230Z</updated>
+    <link href="https://web3isgoinggreat.com/single/brazilian-crypto-lender-bluebenx-halts-customer-withdrawals-and-lays-off-employees-after-32-million-hack" />
+    <id>https://web3isgoinggreat.com/single/brazilian-crypto-lender-bluebenx-halts-customer-withdrawals-and-lays-off-employees-after-32-million-hack</id>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <img src="https://storage.googleapis.com/primary-web3/entryImages/logos/resized/bluebenx_300.webp" alt="Text &#34;BlueBenx&#34; in bright blue, followed by a blue diagonal line with a blue line spiraling around it" width="300px" />
+        <p>
+          The Brazilian crypto lending platform BlueBenx suddenly shut its doors after announcing they had suffered an "extremely aggressive" hack of 160 million BRL (US$32 million). However, they shared very little in the way of details, leading investors to question the veracity of their story.
+          <p>All 22,000 customers of BlueBenx suddenly found them unable to withdraw funds from the platform. The platform also reportedly laid off the majority of its employees.</p>
+        </p>
+        <ul>
+          <li>
+            <a href="https://cointelegraph.com/news/bluebenx-fires-employees-halts-funds-withdrawal-citing-32m-hack">
+                "BlueBenx fires employees, halts funds withdrawal citing $32M hack"
+              </a>
+            ,
+            <i>Cointelegraph</i>
+          </li>
+        </ul>
+      </div>
+    </content>
+  </entry>
+
+  <entry>
+    <title type="html">Misconfiguration in the Acala stablecoin project allows attacker to steal 1.2 billion aUSD</title>
+    <published>2022-08-14T14:41:45.772Z</published>
+    <updated>2022-08-14T15:06:19.264Z</updated>
+    <link href="https://web3isgoinggreat.com/single/misconfiguration-in-the-acala-stablecoin-project-allows-attacker-to-steal-1-2-billion-ausd" />
+    <id>https://web3isgoinggreat.com/single/misconfiguration-in-the-acala-stablecoin-project-allows-attacker-to-steal-1-2-billion-ausd</id>
+    <content type="xhtml">
+      <div xmlns="http://www.w3.org/1999/xhtml">
+        <img src="https://storage.googleapis.com/primary-web3/entryImages/logos/resized/acala_300.webp" alt="A double circle around a triangle shape resembling an A, in an orange and purple gradient. &#34;Acala&#34; follows in the same gradient." width="300px" />
+        <p>
+          A misconfiguration in a newly-deployed liquidity pool allowed an attacker to mint 1.2 billion aUSD, a stablecoin built on the Polkadot network. The exploit caused aUSD to lose its USD peg, initially dropping as low as $0.60 and hovering around $0.90.
+          <p>Acala paused the protocol shortly after the attack, and disabled the transfer functionality of the stolen aUSD and of Acala-based tokens the attacker had swapped for some of the aUSD. It's not yet clear how much the hacker had successfully been able to transfer off-chain in order to realize any profits from the hack, but it's important to note it was nowhere near $1.2 billion USD.</p>
+        </p>
+        <ul>
+          <li>
+            <a href="https://twitter.com/AcalaNetwork/status/1558785360670298112">
+                Tweet thread by AcalaNetwork
+              </a>
+          </li>
+          <li>
+            <a href="https://coinmarketcap.com/currencies/acala-dollar/">
+                Acala Dollar
+              </a>
+            on CoinMarketCap
+          </li>
+        </ul>
+      </div>
+    </content>
+  </entry>
+</feed>
