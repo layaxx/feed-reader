@@ -12,7 +12,8 @@ import { decode } from 'html-entities'
 
 import { isValid as isValidUrl, purify as purifyUrl } from './linker.js'
 import { getReaderOptions } from '../config.js'
-import { buildXML } from './xmlutils.js'
+import { buildXML, getKeys, hasElementHelper } from './xmlutils.js'
+import { XMLParser } from 'fast-xml-parser'
 
 export const toISODateString = (dstr) => {
   try {
@@ -28,23 +29,50 @@ export const buildDescription = (val) => {
   return truncate(stripped, descriptionMaxLen).replace(/\n+/g, ' ')
 }
 
+const htmlTags = new Set(['div', 'p', 'a', 'body', 'img', 'svg', 'main', 'article', 'section'])
+
+const isHTML = (array) => {
+  return array.some(value => htmlTags.has(value))
+}
+
+const hasText = (object) => {
+  return hasElementHelper(object, '_text') || hasElementHelper(object, '#text') ||
+    hasElementHelper(object, '_cdata') || hasElementHelper(object, '$t') || typeof object === 'string'
+}
+
 export const getText = (val) => {
   if (Array.isArray(val)) {
-    if (val.length === 1) return getText(val[0])
-    if (val.length > 1) {
-      const uniqueValues = [...new Set(val.map(value => getText(value)))]
-        .filter(value => value !== '')
-      return uniqueValues.join('')
+    if (val.length === 0) return ''
+    if (isHTML(getKeys(val))) {
+      return buildXML(val)
+    } else {
+      if (val.length === 1) return getText(val[0])
+      if (val.length > 1 && val.every(entry => hasText(entry))) {
+        const uniqueValues = [...new Set(val.map(value => getText(value)))]
+          .filter(value => value !== '')
+        return uniqueValues.join("")
+      }
+      if (val.length > 1 && val.some(entry => hasText(entry))) {
+        const uniqueValues = [...new Set(val.map(value => getText(value)))]
+          .filter(value => value !== '')
+        return uniqueValues.length === 1 ? uniqueValues[0] : uniqueValues
+      }
+      return parseAgain(val)
     }
-    return ''
   }
   let txt = val
   if (typeof val === 'string' || typeof val === 'number') {
     txt = val
   } else if (isObject(val)) {
-    txt = (val._text || val['#text'] || val._cdata || val.$t || getText(buildXML([val])))
+    txt = (val._text || val['#text'] || val._cdata || val.$t ||
+      (val[':@'] && (Object.keys(val[':@']).length === 1) && val[':@'][Object.keys(val[':@'])[0]]))
   }
   return txt ? decode(String(txt).trim()) : ''
+}
+
+const parseAgain = (value) => {
+  const xml = buildXML(value)
+  return new XMLParser({ ignoreAttributes: false }).parse(xml)
 }
 
 export const getLink = (val = [], id = '') => {

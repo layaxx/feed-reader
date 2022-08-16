@@ -20,9 +20,9 @@ export interface FeedData {
     description?: string
     generator?: string
     language?: string
-    published?: string
+    published?: string5141
     entries?: FeedEntry[]
-    [key: string]: string
+    [key: string]: any
 }
 
 export type FeedEntry = {
@@ -31,7 +31,7 @@ export type FeedEntry = {
     published: any
     description: any
     content?: string
-    [key: string]: string
+    [key: string]: any
 }
 
 export type ReaderOptions = {

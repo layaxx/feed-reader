@@ -16,7 +16,6 @@
   },
   "scripts": {
     "lint": "standard .",
-    "pretest": "npm run lint",
     "test": "cross-env NODE_ENV=test NODE_OPTIONS=--experimental-vm-modules jest --coverage=true",
     "build": "node build",
     "eval": "node eval",

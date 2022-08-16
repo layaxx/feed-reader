@@ -56,7 +56,7 @@ describe('test read() function with common issues', () => {
   })
 })
 
-describe('test read() standard feed', (done) => {
+describe('test read() standard feed', () => {
   test('read rss feed from Google', async () => {
     const url = 'https://some-news-page.tld/rss'
     const xml = readFileSync('test-data/rss-feed-standard-realworld.xml', 'utf8')
@@ -254,12 +254,15 @@ describe('additional real world tests', () => {
       expect(Object.keys(result).length).toBe(expectedKeys.length)
 
       expect(result).toMatchObject({
-        // TODO: this should probably not be build as XML (only build XML when html or xhtml attribute is set?)
-        author: '<name>Molly White</name><email>molly.white5@gmail.com</email><uri>https://www.mollywhite.net</uri>',
+        author: {
+          email: 'molly.white5@gmail.com',
+          name: 'Molly White',
+          uri: 'https://www.mollywhite.net'
+        },
         icon: 'https://web3isgoinggreat.com/favicon-32x32.png',
-        cover: '<cover image="https://storage.googleapis.com/primary-web3/entryImages/monkey-og.png"></cover>',
+        cover: 'https://storage.googleapis.com/primary-web3/entryImages/monkey-og.png',
         accentColor: '5948a4',
-        category: '<category term="technology"></category>',
+        category: 'technology',
         rights: 'CC-BY-SA 3.0'
       })
 
@@ -379,10 +382,21 @@ describe('additional real world tests', () => {
       expect(Object.keys(result).length).toBe(expectedKeys.length)
 
       expect(result).toMatchObject({
-        image: '<url>https://substackcdn.com/image/fetch/w_256,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F430241cb-ade5-4316-b1c9-6e3fe6e63e5e_256x256.png</url><title>Astral Codex Ten</title><link>https://astralcodexten.substack.com</link>',
+        image: {
+          link: 'https://astralcodexten.substack.com',
+          title: 'Astral Codex Ten',
+          url: 'https://substackcdn.com/image/fetch/w_256,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2F430241cb-ade5-4316-b1c9-6e3fe6e63e5e_256x256.png'
+        },
         copyright: 'Scott Alexander',
         webMaster: 'astralcodexten@substack.com',
-        owner: '<email>astralcodexten@substack.com</email><name>Scott Alexander</name>astralcodexten@substack.com',
+        owner:
+          [
+            {
+              email: 'astralcodexten@substack.com',
+              name: 'Scott Alexander'
+            },
+            'astralcodexten@substack.com'
+          ],
         author: 'Scott Alexander',
         email: 'astralcodexten@substack.com'
       })
