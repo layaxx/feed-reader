@@ -33,7 +33,8 @@ const transform = (item, includeFullContent, convertPubDateToISO) => {
     title,
     link: getPureUrl(link, id),
     published: convertPubDateToISO ? toISODateString(pubDate) : pubDate,
-    description: buildDescription(encoded || content || summary)
+    description: buildDescription(summary || encoded || content),
+    id
   }
   if (includeFullContent) {
     entry.content = (encoded || content || summary)

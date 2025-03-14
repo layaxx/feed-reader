@@ -32,7 +32,7 @@ const transform = (item, includeFullContent, convertPubDateToISO) => {
     title: getText(title),
     link: getPureUrl(link, guid),
     published,
-    description: buildDescription(encoded || content || description),
+    description: buildDescription(description || encoded || content),
     guid
   }
   if (includeFullContent) {
